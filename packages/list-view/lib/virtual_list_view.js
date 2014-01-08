@@ -10,7 +10,7 @@ function updateScrollerDimensions(target) {
 
   target = target || this;
 
-  horiz = get(target, 'isHorizontal')
+  horiz = get(target, 'isHorizontal');
   width = get(target, 'width');
   height = get(target, 'height');
   totalHeight = horiz ? height : get(target, 'totalHeight');
@@ -43,10 +43,10 @@ Ember.VirtualListView = Ember.ContainerView.extend(Ember.ListViewMixin, Ember.Vi
   applyTransform: Ember.ListViewHelper.apply3DTransform,
 
   setupScroller: function(){
-    var view, y, x, isHoriz;
+    var view, isHoriz;
 
     view = this;
-    isHoriz = this.get('isHorizontal')
+    isHoriz = this.get('isHorizontal');
 
     view.scroller = new Scroller(function(left, top, zoom) {
       if (view.state !== 'inDOM') { return; }
@@ -183,7 +183,7 @@ Ember.VirtualListView = Ember.ContainerView.extend(Ember.ListViewMixin, Ember.Vi
     delta = e[isHoriz ? 'wheelDeltaX' : 'wheelDeltaY'] * (inverted ? 0.8 : -0.8);
     candidatePosition = this.scroller[isHoriz ? '__scrollLeft' : '__scrollTop'] + delta;
 
-    if ((candidatePosition >= 0) && (candidatePosition <= this.scroller[isHoriz ? '__maxScrollLeft' : '__maxScrollTop')) {
+    if ((candidatePosition >= 0) && (candidatePosition <= this.scroller[isHoriz ? '__maxScrollLeft' : '__maxScrollTop'])) {
       this.scroller.scrollBy(isHoriz ? delta : 0, isHoriz ? 0 : delta, true);
     }
 

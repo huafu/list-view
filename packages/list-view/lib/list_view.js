@@ -113,7 +113,7 @@ Ember.ListView = Ember.ContainerView.extend(Ember.ListViewMixin, {
   didInsertElement: function() {
     var that, element;
 
-    that = this,
+    that = this;
     element = get(this, 'element');
 
     this._updateScrollableSize();
