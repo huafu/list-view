@@ -84,7 +84,7 @@ Ember.VirtualListView = Ember.ContainerView.extend(Ember.ListViewMixin, Ember.Vi
     var offset, view = this, isHoriz = view.get('isHorizontal');
     this.pullToRefreshView.on('didInsertElement', function() {
       offset = -1 * view.pullToRefreshViewSize;
-      view.applyTransform(this.get('element'), isHoriz ? pullToRefreshViewSize : 0, isHoriz ? 0 : pullToRefreshViewSize);
+      view.applyTransform(this.get('element'), isHoriz ? offset : 0, isHoriz ? 0 : offset);
     });
   },
   _activateScrollerPullToRefresh: function(){

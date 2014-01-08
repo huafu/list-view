@@ -133,4 +133,5 @@ function synthesizeClick(e) {
     ev.initMouseEvent('click', true, true, e.view, 1, point.screenX, point.screenY, point.clientX, point.clientY, e.ctrlKey, e.altKey, e.shiftKey, e.metaKey, 0, null);
     return target.dispatchEvent(ev);
   }
+  return void 0;
 }

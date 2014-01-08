@@ -38,16 +38,27 @@ domManager.prepend = function(view, html) {
   notifyMutationListeners();
 };
 
-function syncListContainerWidth(){
-  var elementWidth, columnCount, containerWidth, element;
-
-  elementWidth = get(this, 'elementWidth');
-  columnCount = get(this, 'columnCount');
-  containerWidth = elementWidth * columnCount;
-  element = this.$('.ember-list-container');
-
-  if (containerWidth && element) {
-    element.css('width', containerWidth);
+function syncListContainerSize(){
+  var elementWidth, columnCount, containerWidth, element,
+      elementHeight, rowCount, containerHeight;
+  if ( get(this, 'isHorizontal') ) {
+    // horizontal list
+    elementHeight = get(this, 'elementHeight');
+    rowCount = get(this, 'rowCount');
+    containerHeight = elementHeight * rowCount;
+    element = this.$('.ember-list-container');
+    if (containerHeight && element) {
+      element.css('height', containerHeight);
+    }
+  } else {
+    // vertical list
+    elementWidth = get(this, 'elementWidth');
+    columnCount = get(this, 'columnCount');
+    containerWidth = elementWidth * columnCount;
+    element = this.$('.ember-list-container');
+    if (containerWidth && element) {
+      element.css('width', containerWidth);
+    }
   }
 }
 
@@ -440,7 +451,7 @@ Ember.ListViewMixin = Ember.Mixin.create({
 
     if (arguments.length > 0) {
       // invoked by observer
-      Ember.run.schedule('afterRender', this, syncListContainerWidth);
+      Ember.run.schedule('afterRender', this, syncListContainerSize);
     }
   }, 'columnCount'),
 
