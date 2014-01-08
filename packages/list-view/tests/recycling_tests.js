@@ -61,7 +61,7 @@ test("recycling complex views long list", function(){
     height: height,
     rowHeight: rowHeight,
     itemViewClass: itemViewClass,
-    scrollTop: 0,
+    scrollOffset: 0,
     didInsertElement: function() {
       listViewInsertionCount++;
     },
@@ -145,7 +145,7 @@ test("recycling complex views short list", function(){
     height: height,
     rowHeight: rowHeight,
     itemViewClass: itemViewClass,
-    scrollTop: 0,
+    scrollOffset: 0,
     didInsertElement: function() {
       listViewInsertionCount++;
     },
@@ -241,7 +241,7 @@ test("recycling complex views long list, with ReusableListItemView", function(){
     height: height,
     rowHeight: rowHeight,
     itemViewClass: itemViewClass,
-    scrollTop: 0,
+    scrollOffset: 0,
     didInsertElement: function() {
       listViewInsertionCount++;
     },
@@ -345,7 +345,7 @@ test("recycling complex views short list, with ReusableListItemView", function()
     height: height,
     rowHeight: rowHeight,
     itemViewClass: itemViewClass,
-    scrollTop: 0,
+    scrollOffset: 0,
     didInsertElement: function() {
       listViewInsertionCount++;
     },
@@ -453,7 +453,7 @@ test("recycling complex views with ReusableListItemView, handling empty slots at
     width: width,
     elementWidth: elementWidth,
     itemViewClass: itemViewClass,
-    scrollTop: 0,
+    scrollOffset: 0,
     didInsertElement: function() {
       listViewInsertionCount++;
     },

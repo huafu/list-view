@@ -8,7 +8,7 @@ function appendView() {
   });
 }
 
-module("Ember.ListView unit: - scrollTop", {
+module("Ember.ListView unit: - scrollOffset", {
   teardown: function() {
     Ember.run(function() {
       if (view) { view.destroy(); }
@@ -25,16 +25,16 @@ test("base case", function(){
     content: helper.generateContent(5),
     width: width,
     elementWidth: elementWidth,
-    scrollTop: 0
+    scrollOffset: 0
   });
 
-  equal(view.get('scrollTop'), 0);
+  equal(view.get('scrollOffset'), 0);
 
   Ember.run(function(){
     view.set('width', 150);
   });
 
-  equal(view.get('scrollTop'), 0);
+  equal(view.get('scrollOffset'), 0);
 });
 
 test("scroll but within content length", function(){
@@ -46,16 +46,16 @@ test("scroll but within content length", function(){
     content: helper.generateContent(5),
     width: width,
     elementWidth: elementWidth,
-    scrollTop: 100
+    scrollOffset: 100
   });
 
-  equal(view.get('scrollTop'), 100);
+  equal(view.get('scrollOffset'), 100);
 
   Ember.run(function(){
     view.set('width', 150);
   });
 
-  equal(view.get('scrollTop'), 0);
+  equal(view.get('scrollOffset'), 0);
 });
 
 test("scroll but beyond content length", function(){
@@ -67,15 +67,15 @@ test("scroll but beyond content length", function(){
     content: helper.generateContent(5),
     width: width,
     elementWidth: elementWidth,
-    scrollTop: 1000
+    scrollOffset: 1000
   });
 
-  equal(view.get('scrollTop'), 1000);
+  equal(view.get('scrollOffset'), 1000);
 
   Ember.run(function(){
     view.set('width', 150);
   });
 
-  equal(view.get('scrollTop'), 0);
+  equal(view.get('scrollOffset'), 0);
 });
 

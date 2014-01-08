@@ -72,7 +72,7 @@ test("should render a subset of the full content, based on the height, in the co
   deepEqual(helper.itemPositions(view).map(yPosition), [0, 50, 100, 150, 200, 250, 300, 350, 400, 450, 500]);
 });
 
-test("should render correctly with an initial scrollTop", function() {
+test("should render correctly with an initial scrollOffset", function() {
   var content = helper.generateContent(100),
       height = 500,
       rowHeight = 50,
@@ -85,7 +85,7 @@ test("should render correctly with an initial scrollTop", function() {
     height: height,
     rowHeight: rowHeight,
     itemViewClass: itemViewClass,
-    scrollTop: 475
+    scrollOffset: 475
   });
 
   appendView();
@@ -131,7 +131,7 @@ test("should perform correct number of renders and repositions on short list ini
     width: width,
     rowHeight: rowHeight,
     itemViewClass: itemViewClass,
-    scrollTop: 0
+    scrollOffset: 0
   });
 
   appendView();
@@ -144,7 +144,7 @@ test("should perform correct number of renders and repositions while short list 
   var content = helper.generateContent(8),
       height = 60,
       width = 50,
-      scrollTop = 50,
+      scrollOffset = 50,
       rowHeight = 10,
       positions = 0,
       renders = 0,
@@ -176,13 +176,13 @@ test("should perform correct number of renders and repositions while short list 
     width: width,
     rowHeight: rowHeight,
     itemViewClass: itemViewClass,
-    scrollTop: 0
+    scrollOffset: 0
   });
 
   appendView();
 
   Ember.run(function () {
-    view.scrollTo(scrollTop);
+    view.scrollTo(scrollOffset);
   });
 
   equal(renders, 14, "The correct number of renders occured");
@@ -220,7 +220,7 @@ test("should perform correct number of renders and repositions on long list init
     width: width,
     rowHeight: rowHeight,
     itemViewClass: itemViewClass,
-    scrollTop: 0
+    scrollOffset: 0
   });
 
   appendView();
@@ -331,7 +331,7 @@ test("adding a column, when everything is already within viewport", function(){
     rowHeight: rowHeight,
     elementWidth: elementWidth,
     itemViewClass: itemViewClass,
-    scrollTop: 0
+    scrollOffset: 0
   });
 
   appendView();
@@ -405,7 +405,7 @@ test("height and width change after with scroll – simple", function(){
     rowHeight: rowHeight,
     elementWidth: elementWidth,
     itemViewClass: itemViewClass,
-    scrollTop: 0
+    scrollOffset: 0
   });
 
   appendView();
@@ -504,7 +504,7 @@ test("height and width change after with scroll – 1x2 -> 2x2 with 5 items, ", 
     rowHeight: rowHeight,
     elementWidth: elementWidth,
     itemViewClass: itemViewClass,
-    scrollTop: 0
+    scrollOffset: 0
   });
 
   appendView();
@@ -867,7 +867,7 @@ test("should trigger scrollYChanged correctly", function () {
 
   view = Ember.ListView.extend({
     init: function () {
-      this.on('scrollYChanged', function () {
+      this.on('scrollOffsetChanged', function () {
         scrollYChanged++;
       });
       this._super();

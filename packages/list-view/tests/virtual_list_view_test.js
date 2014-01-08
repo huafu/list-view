@@ -135,7 +135,7 @@ test("lifecycle events", function(){
     height: height,
     rowHeight: rowHeight,
     itemViewClass: itemViewClass,
-    scrollTop: 475
+    scrollOffset: 475
   });
 
   equal(didInitializeScrollerCount, 1, 'didInitializeScroller event was fired on create');
@@ -162,7 +162,7 @@ test("lifecycle events", function(){
   equal(scrollingDidCompleteCount, 1, 'scrollingDidCompleteCount event was NOT fired on create');
 });
 
-test("should render correctly with an initial scrollTop", function() {
+test("should render correctly with an initial scrollOffset", function() {
   var content = helper.generateContent(100),
       height = 500,
       rowHeight = 50,
@@ -175,7 +175,7 @@ test("should render correctly with an initial scrollTop", function() {
     height: height,
     rowHeight: rowHeight,
     itemViewClass: itemViewClass,
-    scrollTop: 475
+    scrollOffset: 475
   });
 
   appendView();
@@ -294,7 +294,7 @@ test("height and width change after with scroll – simple", function(){
     rowHeight: rowHeight,
     elementWidth: elementWidth,
     itemViewClass: itemViewClass,
-    scrollTop: 0
+    scrollOffset: 0
   });
 
   appendView();
@@ -393,7 +393,7 @@ test("height and width change after with scroll – 1x2 -> 2x2 with 5 items, ", 
     rowHeight: rowHeight,
     elementWidth: elementWidth,
     itemViewClass: itemViewClass,
-    scrollTop: 0
+    scrollOffset: 0
   });
 
   appendView();
@@ -752,7 +752,7 @@ test("adding a column, when everything is already within viewport", function(){
     rowHeight: rowHeight,
     elementWidth: elementWidth,
     itemViewClass: itemViewClass,
-    scrollTop: 0
+    scrollOffset: 0
   });
 
   appendView();

@@ -25,7 +25,7 @@ test("base case", function(){
     content: helper.generateContent(5),
     width: width,
     elementWidth: elementWidth,
-    scrollTop: 0
+    scrollOffset: 0
   });
 
   equal(view._startingIndex(), 0);
@@ -40,7 +40,7 @@ test("scroll but within content length", function(){
     content: helper.generateContent(5),
     width: width,
     elementWidth: elementWidth,
-    scrollTop: 100
+    scrollOffset: 100
   });
 
   equal(view._startingIndex(), 4);
@@ -55,7 +55,7 @@ test("scroll but beyond content length", function(){
     content: helper.generateContent(5),
     width: width,
     elementWidth: elementWidth,
-    scrollTop: 1000
+    scrollOffset: 1000
   });
 
   equal(view._startingIndex(), 4);

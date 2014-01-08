@@ -16,7 +16,7 @@ module("Ember.ListView unit: - numOfChildViewsForViewport", {
   }
 });
 
-test("computing the number of child views to create with scrollTop zero", function() {
+test("computing the number of child views to create with scrollOffset zero", function() {
   view = Ember.ListView.create({
     height: 500,
     rowHeight: 50,
@@ -30,7 +30,7 @@ test("computing the number of child views to create after when scroll down a bit
   view = Ember.ListView.create({
     height: 500,
     rowHeight: 50,
-    scrollTop: 51,
+    scrollOffset: 51,
     content: Ember.A()
   });
   equal(view._numChildViewsForViewport(), 11);
