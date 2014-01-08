@@ -104,10 +104,10 @@ Ember.ListView = Ember.ContainerView.extend(Ember.ListViewMixin, {
 
   applyTransform: Ember.ListViewHelper.applyTransform,
 
-  _scrollTo: function(scrollTop) {
-    var element = get(this, 'element');
+  _scrollTo: function(scrollOffset) {
+    var element = get(this, 'element'), prop = get(this, 'scrollProperty');
 
-    if (element) { element.scrollTop = scrollTop; }
+    if (element) { element[prop] = scrollOffset; }
   },
 
   didInsertElement: function() {
@@ -116,7 +116,7 @@ Ember.ListView = Ember.ContainerView.extend(Ember.ListViewMixin, {
     that = this,
     element = get(this, 'element');
 
-    this._updateScrollableHeight();
+    this._updateScrollableSize();
 
     this._scroll = function(e) { that.scroll(e); };
 
@@ -132,23 +132,30 @@ Ember.ListView = Ember.ContainerView.extend(Ember.ListViewMixin, {
   },
 
   scroll: function(e) {
-    Ember.run(this, this.scrollTo, e.target.scrollTop);
+    Ember.run(this, this.scrollTo, e.target[get(this, 'scrollProperty')]);
   },
 
-  scrollTo: function(y){
+  scrollTo: function(offset){
     var element = get(this, 'element');
-    this._scrollTo(y);
-    this._scrollContentTo(y);
+    this._scrollTo(offset);
+    this._scrollContentTo(offset);
   },
 
-  totalHeightDidChange: Ember.observer(function () {
-    Ember.run.scheduleOnce('afterRender', this, this._updateScrollableHeight);
-  }, 'totalHeight'),
+  totalSizeDidChange: Ember.observer(function () {
+    Ember.run.scheduleOnce('afterRender', this, this._updateScrollableSize);
+  }, 'totalSize'),
 
-  _updateScrollableHeight: function () {
+  _updateScrollableSize: function () {
+    var height = '', width = '';
     if (this.state === 'inDOM') {
+      if ( get(this, 'isHorizontal') ) {
+        width = get(this, 'totalSize');
+      } else {
+        height = get(this, 'totalSize');
+      }
       this.$('.ember-list-container').css({
-        height: get(this, 'totalHeight')
+        height: height,
+        width: width
       });
     }
   }

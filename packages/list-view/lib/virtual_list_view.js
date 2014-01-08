@@ -6,15 +6,17 @@ require('list-view/virtual_list_scroller_events');
 var max = Math.max, get = Ember.get, set = Ember.set;
 
 function updateScrollerDimensions(target) {
-  var width, height, totalHeight;
+  var width, height, totalHeight, totalWidth, horiz;
 
   target = target || this;
 
+  horiz = get(target, 'isHorizontal')
   width = get(target, 'width');
   height = get(target, 'height');
-  totalHeight = get(target, 'totalHeight');
+  totalHeight = horiz ? height : get(target, 'totalHeight');
+  totalWidth = horiz ? get(target, 'totalWidth') : width;
 
-  target.scroller.setDimensions(width, height, width, totalHeight);
+  target.scroller.setDimensions(width, height, totalWidth, totalHeight);
   target.trigger('scrollerDimensionsDidChange');
 }
 
@@ -37,24 +39,32 @@ Ember.VirtualListView = Ember.ContainerView.extend(Ember.ListViewMixin, Ember.Vi
     this.setupScroller();
     this.setupPullToRefresh();
   },
-  _scrollerTop: 0,
+  _scrollerOffset: 0,
   applyTransform: Ember.ListViewHelper.apply3DTransform,
 
   setupScroller: function(){
-    var view, y;
+    var view, y, x, isHoriz;
 
     view = this;
+    isHoriz = this.get('isHorizontal')
 
     view.scroller = new Scroller(function(left, top, zoom) {
       if (view.state !== 'inDOM') { return; }
 
       if (view.listContainerElement) {
-        view.applyTransform(view.listContainerElement, 0, -top);
-        view._scrollerTop = top;
-        view._scrollContentTo(top);
+        if ( isHoriz ) {
+          view.applyTransform(view.listContainerElement, -left, 0);
+          view._scrollerOffset = left;
+          view._scrollContentTo(left);
+        } else {
+          view.applyTransform(view.listContainerElement, 0, -top);
+          view._scrollerTop = top;
+          view._scrollContentTo(top);
+        }
       }
     }, {
-      scrollingX: false,
+      scrollingY: !isHoriz,
+      scrollingX: isHoriz,
       scrollingComplete: function(){
         view.trigger('scrollingDidComplete');
       }
@@ -71,9 +81,10 @@ Ember.VirtualListView = Ember.ContainerView.extend(Ember.ListViewMixin, Ember.Vi
   _insertPullToRefreshView: function(){
     this.pullToRefreshView = this.createChildView(this.pullToRefreshViewClass);
     this.insertAt(0, this.pullToRefreshView);
-    var view = this;
-    this.pullToRefreshView.on('didInsertElement', function(){
-      view.applyTransform(this.get('element'), 0, -1 * view.pullToRefreshViewHeight);
+    var offset, view = this, isHoriz = view.get('isHorizontal');
+    this.pullToRefreshView.on('didInsertElement', function() {
+      offset = -1 * view.pullToRefreshViewSize;
+      view.applyTransform(this.get('element'), isHoriz ? pullToRefreshViewSize : 0, isHoriz ? 0 : pullToRefreshViewSize);
     });
   },
   _activateScrollerPullToRefresh: function(){
@@ -98,7 +109,7 @@ Ember.VirtualListView = Ember.ContainerView.extend(Ember.ListViewMixin, Ember.Vi
       view.startRefresh(finishRefresh);
     }
     this.scroller.activatePullToRefresh(
-      this.pullToRefreshViewHeight,
+      this.pullToRefreshViewSize,
       activatePullToRefresh,
       deactivatePullToRefresh,
       startPullToRefresh
@@ -116,7 +127,7 @@ Ember.VirtualListView = Ember.ContainerView.extend(Ember.ListViewMixin, Ember.Vi
 
   scrollerDimensionsNeedToChange: Ember.observer(function() {
     Ember.run.once(this, updateScrollerDimensions);
-  }, 'width', 'height', 'totalHeight'),
+  }, 'width', 'height', 'totalHeight', 'totalWidth'),
 
   didInsertElement: function() {
     this.listContainerElement = this.$('> .ember-list-container')[0];
@@ -130,18 +141,18 @@ Ember.VirtualListView = Ember.ContainerView.extend(Ember.ListViewMixin, Ember.Vi
   },
 
   continueScroll: function(touches, timeStamp) {
-    var startingScrollTop, endingScrollTop, event;
+    var startingScrollOffset, endingScrollOffset, event;
 
     if (this._isScrolling) {
       this.scroller.doTouchMove(touches, timeStamp);
     } else {
-      startingScrollTop = this._scrollerTop;
+      startingScrollOffset = this._scrollerOffset;
 
       this.scroller.doTouchMove(touches, timeStamp);
 
-      endingScrollTop = this._scrollerTop;
+      endingScrollOffset = this._scrollerOffset;
 
-      if (startingScrollTop !== endingScrollTop) {
+      if (startingScrollOffset !== endingScrollOffset) {
         event = Ember.$.Event("scrollerstart");
         Ember.$(touches[0].target).trigger(event);
 
@@ -155,24 +166,25 @@ Ember.VirtualListView = Ember.ContainerView.extend(Ember.ListViewMixin, Ember.Vi
   },
 
   // api
-  scrollTo: function(y, animate) {
+  scrollTo: function(offset, animate) {
+    var isHoriz = get(this, 'isHorizontal');
     if (animate === undefined) {
       animate = true;
     }
 
-    this.scroller.scrollTo(0, y, animate, 1);
+    this.scroller.scrollTo(isHoriz ? offset : 0, isHoriz ? 0 : offset, animate, 1);
   },
 
   // events
   mouseWheel: function(e){
-    var inverted, delta, candidatePosition;
+    var inverted, delta, candidatePosition, isHoriz = get(this, 'isHorizontal');
 
     inverted = e.webkitDirectionInvertedFromDevice;
-    delta = e.wheelDeltaY * (inverted ? 0.8 : -0.8);
-    candidatePosition = this.scroller.__scrollTop + delta;
+    delta = e[isHoriz ? 'wheelDeltaX' : 'wheelDeltaY'] * (inverted ? 0.8 : -0.8);
+    candidatePosition = this.scroller[isHoriz ? '__scrollLeft' : '__scrollTop'] + delta;
 
-    if ((candidatePosition >= 0) && (candidatePosition <= this.scroller.__maxScrollTop)) {
-      this.scroller.scrollBy(0, delta, true);
+    if ((candidatePosition >= 0) && (candidatePosition <= this.scroller[isHoriz ? '__maxScrollLeft' : '__maxScrollTop')) {
+      this.scroller.scrollBy(isHoriz ? delta : 0, isHoriz ? 0 : delta, true);
     }
 
     return false;
