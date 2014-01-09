@@ -79,14 +79,46 @@ function itemPositions(view) {
   }).sort(sortByPosition);
 }
 
-function logPosition(position) {
-  console.log('[x: ' + position.x + ', y: ' + position.y +']');
+function sortElementsByPositionForHorizList (elements) {
+  return elements.sort(function(a, b){
+    var aPosition, bPosition;
+
+    aPosition = extractPosition(a);
+    bPosition = extractPosition(b);
+
+    if (bPosition.x === aPosition.x){
+      return (aPosition.y - bPosition.y);
+    } else {
+      return (aPosition.x - bPosition.x);
+    }
+  });
 }
+
+function sortByPositionForHorizList (a, b) {
+  var aPosition, bPosition;
+
+  aPosition = a;
+  bPosition = b;
+
+  if (bPosition.x === aPosition.x){
+    return (aPosition.y - bPosition.y);
+  } else {
+    return (aPosition.x - bPosition.x);
+  }
+}
+
+function itemPositionsForHorizList(view) {
+  return Ember.A(view.$('.ember-list-item-view').toArray()).map(function(e) {
+    return extractPosition(e);
+  }).sort(sortByPositionForHorizList);
+}
+
 
 window.helper = {
   itemPositions: itemPositions,
+  itemPositionsForHorizList: itemPositionsForHorizList,
   generateContent: generateContent,
   sortElementsByPosition: sortElementsByPosition,
-  extractPosition: extractPosition,
-  logPosition: logPosition
+  sortElementsByPositionForHorizList: sortElementsByPositionForHorizList,
+  extractPosition: extractPosition
 };
