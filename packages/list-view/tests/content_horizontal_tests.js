@@ -8,7 +8,7 @@ function appendView() {
   });
 }
 
-module("Ember.ListView integration - Content", {
+module("Ember.ListView (horizontal) integration - Content", {
   setup: function() {
     css = Ember.$("<style>" +
             ".ember-list-view {" +
