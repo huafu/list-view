@@ -428,27 +428,26 @@ Ember.ListViewMixin = Ember.Mixin.create({
     @event columnCountDidChange
   */
   columnCountDidChange: Ember.observer(function(){
-    var ratio, currentScrollTop, proposedScrollTop, maxScrollTop,
-        scrollTop, lastColumnCount, newColumnCount, element;
+    var ratio, currentScrollOffset, proposedScrollOffset, maxScrollOffset,
+        scrollOffset, lastColumnCount, newColumnCount;
 
     if ( get(this, 'isHorizontal') ) return;
 
     lastColumnCount = this._lastColumnCount;
 
-    currentScrollTop = get(this, 'scrollTop');
+    currentScrollOffset = get(this, 'scrollOffset');
     newColumnCount = get(this, 'columnCount');
-    maxScrollTop = get(this, 'maxScrollTop');
-    element = get(this, 'element');
+    maxScrollOffset = get(this, 'maxScrollTop');
 
     this._lastColumnCount = newColumnCount;
 
     if (lastColumnCount) {
       ratio = (lastColumnCount / newColumnCount);
-      proposedScrollTop = currentScrollTop * ratio;
-      scrollTop = min(maxScrollTop, proposedScrollTop);
+      proposedScrollOffset = currentScrollOffset * ratio;
+      scrollOffset = min(maxScrollOffset, proposedScrollOffset);
 
-      this._scrollTo(scrollTop);
-      set(this, 'scrollTop', scrollTop);
+      this._scrollTo(scrollOffset);
+      set(this, 'scrollOffset', scrollOffset);
     }
 
     if (arguments.length > 0) {
@@ -510,24 +509,23 @@ Ember.ListViewMixin = Ember.Mixin.create({
     @event rowCountDidChange
   */
   rowCountDidChange: Ember.observer(function(){
-    var ratio, currentScrollLeft, proposedScrollLeft, maxScrollLeft,
-        scrollOffset, lastRowCount, newRowCount, element;
+    var ratio, currentScrollOffset, proposedScrollOffset, maxScrollOffset,
+        scrollOffset, lastRowCount, newRowCount;
 
     if ( !get(this, 'isHorizontal') ) return;
 
     lastRowCount = this._lastRowCount;
 
-    currentScrollLeft = get(this, 'scrollOffset');
+    currentScrollOffset = get(this, 'scrollOffset');
     newRowCount = get(this, 'rowCount');
-    maxScrollLeft = get(this, 'maxScrollLeft');
-    element = get(this, 'element');
+    maxScrollOffset = get(this, 'maxScrollLeft');
 
     this._lastRowCount = newRowCount;
 
     if (lastRowCount) {
       ratio = (lastRowCount / newRowCount);
-      proposedScrollLeft = currentScrollLeft * ratio;
-      scrollOffset = min(maxScrollLeft, proposedScrollLeft);
+      proposedScrollOffset = currentScrollOffset * ratio;
+      scrollOffset = min(maxScrollOffset, proposedScrollOffset);
 
       this._scrollTo(scrollOffset);
       set(this, 'scrollOffset', scrollOffset);
