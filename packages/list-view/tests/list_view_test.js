@@ -862,13 +862,13 @@ test("Creating a ListView without height and rowHeight properties should throw a
   /A vertical ListView must be created with a height and a rowHeight./, "Throws exception.");
 });
 
-test("should trigger scrollYChanged correctly", function () {
-  var scrollYChanged = 0, reuseChildren = 0;
+test("should trigger scrollOffsetChanged correctly", function () {
+  var scrollOffsetChanged = 0, reuseChildren = 0;
 
   view = Ember.ListView.extend({
     init: function () {
       this.on('scrollOffsetChanged', function () {
-        scrollYChanged++;
+        scrollOffsetChanged++;
       });
       this._super();
     },
@@ -884,23 +884,23 @@ test("should trigger scrollYChanged correctly", function () {
 
   appendView();
 
-  equal(scrollYChanged, 0, 'scrollYChanged should not fire on init');
+  equal(scrollOffsetChanged, 0, 'scrollOffsetChanged should not fire on init');
 
   Ember.run(function () {
     view.scrollTo(1);
   });
 
-  equal(scrollYChanged, 1, 'scrollYChanged should fire after scroll');
+  equal(scrollOffsetChanged, 1, 'scrollOffsetChanged should fire after scroll');
 
   Ember.run(function () {
     view.scrollTo(1);
   });
 
-  equal(scrollYChanged, 1, 'scrollYChanged should not fire for same value');
+  equal(scrollOffsetChanged, 1, 'scrollOffsetChanged should not fire for same value');
 });
 
 test("should trigger reuseChildren correctly", function () {
-  var scrollYChanged = 0, reuseChildren = 0;
+  var reuseChildren = 0;
 
   view = Ember.ListView.extend({
     _reuseChildren: function () {
