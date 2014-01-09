@@ -80,7 +80,7 @@ test("adding to the front of the horizontal list content", function() {
     content.unshiftObject({name: "Item -1"});
   });
 
-  var positionSorted = helper.sortElementsByPosition(view.$('.ember-list-item-view'));
+  var positionSorted = helper.sortElementsByPositionForHorizList(view.$('.ember-list-item-view'));
   equal(Ember.$(positionSorted[0]).text(), "Item -1", "The item has been inserted in the list");
   equal(view.$('.ember-list-container').width(), 5050, "The scrollable view has the correct width");
 });
