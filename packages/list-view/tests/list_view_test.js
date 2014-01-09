@@ -848,7 +848,7 @@ test("Creating a ListView without height and rowHeight properties should throw a
 
     appendView();
   },
-  /A ListView must be created with a height and a rowHeight./, "Throws exception.");
+  /A vertical ListView must be created with a height and a rowHeight./, "Throws exception.");
 });
 
 test("Creating a ListView without height and rowHeight properties should throw an exception", function() {
@@ -859,7 +859,7 @@ test("Creating a ListView without height and rowHeight properties should throw a
 
     appendView();
   },
-  /A ListView must be created with a height and a rowHeight./, "Throws exception.");
+  /A vertical ListView must be created with a height and a rowHeight./, "Throws exception.");
 });
 
 test("should trigger scrollYChanged correctly", function () {
