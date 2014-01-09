@@ -431,6 +431,8 @@ Ember.ListViewMixin = Ember.Mixin.create({
     var ratio, currentScrollTop, proposedScrollTop, maxScrollTop,
         scrollTop, lastColumnCount, newColumnCount, element;
 
+    if ( get(this, 'isHorizontal') ) return;
+
     lastColumnCount = this._lastColumnCount;
 
     currentScrollTop = get(this, 'scrollTop');
@@ -510,6 +512,8 @@ Ember.ListViewMixin = Ember.Mixin.create({
   rowCountDidChange: Ember.observer(function(){
     var ratio, currentScrollLeft, proposedScrollLeft, maxScrollLeft,
         scrollOffset, lastRowCount, newRowCount, element;
+
+    if ( !get(this, 'isHorizontal') ) return;
 
     lastRowCount = this._lastRowCount;
 
