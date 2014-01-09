@@ -6,15 +6,15 @@ require('list-view/virtual_list_scroller_events');
 var max = Math.max, get = Ember.get, set = Ember.set;
 
 function updateScrollerDimensions(target) {
-  var width, height, totalHeight, totalWidth, horiz;
+  var width, height, totalHeight, totalWidth, isHoriz;
 
   target = target || this;
 
-  horiz = get(target, 'isHorizontal');
+  isHoriz = get(target, 'isHorizontal');
   width = get(target, 'width');
   height = get(target, 'height');
-  totalHeight = horiz ? height : get(target, 'totalHeight');
-  totalWidth = horiz ? get(target, 'totalWidth') : width;
+  totalHeight = isHoriz ? height : get(target, 'totalHeight');
+  totalWidth = isHoriz ? get(target, 'totalWidth') : width;
 
   target.scroller.setDimensions(width, height, totalWidth, totalHeight);
   target.trigger('scrollerDimensionsDidChange');
@@ -126,7 +126,7 @@ Ember.VirtualListView = Ember.ContainerView.extend(Ember.ListViewMixin, Ember.Vi
 
   scrollerDimensionsNeedToChange: Ember.observer(function() {
     Ember.run.once(this, updateScrollerDimensions);
-  }, 'width', 'height', 'totalHeight', 'totalWidth'),
+  }, 'width', 'height', 'totalHeight', 'totalWidth', 'isHorizontal'),
 
   didInsertElement: function() {
     this.listContainerElement = this.$('> .ember-list-container')[0];

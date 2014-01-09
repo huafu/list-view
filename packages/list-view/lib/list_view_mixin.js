@@ -278,9 +278,9 @@ Ember.ListViewMixin = Ember.Mixin.create({
 
     @property {Ember.ComputedProperty} totalHeight
   */
-  totalHeight: Ember.computed('content.length', 'rowHeight', 'columnCount', 'bottomPadding', function() {
+  totalHeight: Ember.computed('content.length', 'rowHeight', 'columnCount', 'bottomPadding', 'isHorizontal', function() {
     var contentLength, rowHeight, columnCount, bottomPadding;
-
+    if ( get(this, 'isHorizontal') ) return get(this, 'height');
     contentLength = get(this, 'content.length');
     rowHeight = get(this, 'rowHeight');
     columnCount = get(this, 'columnCount');
@@ -297,9 +297,9 @@ Ember.ListViewMixin = Ember.Mixin.create({
 
     @property {Ember.ComputedProperty} totalWidth
   */
-  totalWidth: Ember.computed('content.length', 'columnWidth', 'rowCount', 'rightPadding', function() {
+  totalWidth: Ember.computed('content.length', 'columnWidth', 'rowCount', 'rightPadding', 'isHorizontal', function() {
     var contentLength, columnWidth, rowCount, rightPadding;
-
+    if ( !get(this, 'isHorizontal') ) return get(this, 'width');
     contentLength = get(this, 'content.length');
     columnWidth = get(this, 'columnWidth');
     rowCount = get(this, 'rowCount');
