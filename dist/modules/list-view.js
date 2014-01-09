@@ -373,6 +373,7 @@ Ember.ListViewMixin = Ember.Mixin.create({
     this._super();
     this.on('didInsertElement', syncListContainerSize);
     this.columnCountDidChange();
+    this.rowCountDidChange();
     this._syncChildViews();
     this._addContentArrayObserver();
   },

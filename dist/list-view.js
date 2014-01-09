@@ -1,4 +1,4 @@
-// Last commit: 3da2218 (2014-01-09 10:46:02 +0700)
+// Last commit: ed233e0 (2014-01-09 14:05:36 +0700)
 
 
 (function() {
@@ -376,6 +376,7 @@ Ember.ListViewMixin = Ember.Mixin.create({
     this._super();
     this.on('didInsertElement', syncListContainerSize);
     this.columnCountDidChange();
+    this.rowCountDidChange();
     this._syncChildViews();
     this._addContentArrayObserver();
   },
