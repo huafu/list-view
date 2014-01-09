@@ -8,7 +8,7 @@ function Scroller(callback, opts){
   this.callback = callback;
   this.opts = opts;
   this.scrollTo = function(left, top, zoom) {
-    view._scrollerTop = top;
+    view._scrollerOffset = top;
     view._scrollContentTo(Math.max(0, top));
   };
   this.setDimensions = function() { };

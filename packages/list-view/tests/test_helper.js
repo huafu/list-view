@@ -79,9 +79,14 @@ function itemPositions(view) {
   }).sort(sortByPosition);
 }
 
+function logPosition(position) {
+  console.log('[x: ' + position.x + ', y: ' + position.y +']');
+}
+
 window.helper = {
   itemPositions: itemPositions,
   generateContent: generateContent,
   sortElementsByPosition: sortElementsByPosition,
-  extractPosition: extractPosition
+  extractPosition: extractPosition,
+  logPosition: logPosition
 };
