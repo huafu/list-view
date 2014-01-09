@@ -592,10 +592,10 @@ Ember.ListViewMixin = Ember.Mixin.create({
   _startingIndex: function() {
     var scrollOffset, rowHeight, columnCount, calculatedStartingIndex,
         contentLength, largestStartingIndex, columnWidth, rowCount;
+    contentLength = get(this, 'content.length');
+    scrollOffset = get(this, 'scrollOffset');
     if ( get(this, 'isHorizontal') ) {
       // horizontal list
-      contentLength = get(this, 'content.length');
-      scrollOffset = get(this, 'scrollOffset');
       columnWidth = get(this, 'columnWidth');
       rowCount = get(this, 'rowCount');
       calculatedStartingIndex = floor(scrollOffset / columnWidth) * rowCount;
@@ -603,8 +603,6 @@ Ember.ListViewMixin = Ember.Mixin.create({
       return min(calculatedStartingIndex, largestStartingIndex);
     } else {
       // vertical list
-      contentLength = get(this, 'content.length');
-      scrollOffset = get(this, 'scrollOffset');
       rowHeight = get(this, 'rowHeight');
       columnCount = get(this, 'columnCount');
       calculatedStartingIndex = floor(scrollOffset / rowHeight) * columnCount;
