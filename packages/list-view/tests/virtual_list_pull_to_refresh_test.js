@@ -91,7 +91,7 @@ test("When pulling below zero, show the pull to refresh view", function() {
       classNames: ['pull-to-refresh'],
       template: Ember.Handlebars.compile("Pull to refresh...")
     }),
-    pullToRefreshViewHeight: 75,
+    pullToRefreshViewSize: 75,
     activatePullToRefresh: function() {
       this.pullToRefreshActivated = true;
     },
