@@ -55,12 +55,11 @@ Ember.VirtualListView = Ember.ContainerView.extend(Ember.ListViewMixin, Ember.Vi
         if ( isHoriz ) {
           view.applyTransform(view.listContainerElement, -left, 0);
           view._scrollerOffset = left;
-          view._scrollContentTo(left);
         } else {
           view.applyTransform(view.listContainerElement, 0, -top);
-          view._scrollerTop = top;
-          view._scrollContentTo(top);
+          view._scrollerOffset = top;
         }
+        view._scrollContentTo(view._scrollerOffset);
       }
     }, {
       scrollingY: !isHoriz,

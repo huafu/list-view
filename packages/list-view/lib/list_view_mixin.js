@@ -100,10 +100,6 @@ Ember.ListViewMixin = Ember.Mixin.create({
   paddingCount: 1,
   isHorizontal: false,
 
-  scrollProperty: Ember.computed('isHorizontal', function() {
-    return get(this, 'isHorizontal') ? 'scrollLeft' : 'scrollTop';
-  }),
-
   totalSize: Ember.computed('isHorizontal', 'totalWidth', 'totalHeight', function() {
     if ( get(this, 'isHorizontal') ) {
       return get(this, 'totalWidth');

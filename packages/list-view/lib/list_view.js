@@ -49,7 +49,7 @@ var get = Ember.get, set = Ember.set;
   ```
 
   By default `Ember.ListView` provides support for `height`,
-  `rowHeight`, `width`, `elementWidth`, `scrollTop` parameters.
+  `rowHeight`, `width`, `elementWidth`, `scrollOffset` parameters.
 
   Note, that `height` and `rowHeight` are required parameters.
 
@@ -105,9 +105,9 @@ Ember.ListView = Ember.ContainerView.extend(Ember.ListViewMixin, {
   applyTransform: Ember.ListViewHelper.applyTransform,
 
   _scrollTo: function(scrollOffset) {
-    var element = get(this, 'element'), prop = get(this, 'scrollProperty');
+    var element = get(this, 'element');
 
-    if (element) { element[prop] = scrollOffset; }
+    if (element) { element[get(this, 'isHorizontal') ? 'scrollLeft' : 'scrollTop'] = scrollOffset; }
   },
 
   didInsertElement: function() {
@@ -132,11 +132,10 @@ Ember.ListView = Ember.ContainerView.extend(Ember.ListViewMixin, {
   },
 
   scroll: function(e) {
-    Ember.run(this, this.scrollTo, e.target[get(this, 'scrollProperty')]);
+    Ember.run(this, this.scrollTo, e.target[get(this, 'isHorizontal') ? 'scrollLeft' : 'scrollTop']);
   },
 
   scrollTo: function(offset){
-    var element = get(this, 'element');
     this._scrollTo(offset);
     this._scrollContentTo(offset);
   },
