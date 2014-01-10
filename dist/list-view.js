@@ -1,4 +1,4 @@
-// Last commit: ed233e0 (2014-01-09 14:05:36 +0700)
+// Last commit: 561a63d (2014-01-10 14:07:39 +0700)
 
 
 (function() {
@@ -1519,7 +1519,9 @@ Ember.VirtualListView = Ember.ContainerView.extend(Ember.ListViewMixin, Ember.Vi
     var inverted, delta, candidatePosition, isHoriz = get(this, 'isHorizontal');
 
     inverted = e.webkitDirectionInvertedFromDevice;
-    delta = e[isHoriz ? 'wheelDeltaX' : 'wheelDeltaY'] * (inverted ? 0.8 : -0.8);
+    delta = e[isHoriz ? 'wheelDeltaX' : 'wheelDeltaY'];
+    if ( isHoriz && !delta ) delta = e.wheelDeltaY;
+    delta = delta * (inverted ? 0.8 : -0.8);
     candidatePosition = this.scroller[isHoriz ? '__scrollLeft' : '__scrollTop'] + delta;
 
     if ((candidatePosition >= 0) && (candidatePosition <= this.scroller[isHoriz ? '__maxScrollLeft' : '__maxScrollTop'])) {
