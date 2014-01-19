@@ -114,6 +114,13 @@ Ember.ListViewMixin = Ember.Mixin.create({
     return get(this, 'height');
   }),
 
+  maxScrollOffset: Ember.computed('isHorizontal', 'maxScrollTop', 'maxScrollLeft', function() {
+    if ( get(this, 'isHorizontal') ) {
+      return get(this, 'maxScrollLeft');
+    }
+    return get(this, 'maxScrollTop');
+  }),
+
 
   /**
     @private
@@ -434,7 +441,7 @@ Ember.ListViewMixin = Ember.Mixin.create({
 
     currentScrollOffset = get(this, 'scrollOffset');
     newColumnCount = get(this, 'columnCount');
-    maxScrollOffset = get(this, 'maxScrollTop');
+    maxScrollOffset = get(this, 'maxScrollOffset');
 
     this._lastColumnCount = newColumnCount;
 
@@ -451,7 +458,7 @@ Ember.ListViewMixin = Ember.Mixin.create({
       // invoked by observer
       Ember.run.schedule('afterRender', this, syncListContainerSize);
     }
-  }, 'columnCount'),
+  }, 'columnCount', 'isHorizontal'),
 
   /**
     @private
@@ -532,7 +539,7 @@ Ember.ListViewMixin = Ember.Mixin.create({
       // invoked by observer
       Ember.run.schedule('afterRender', this, syncListContainerSize);
     }
-  }, 'rowCount'),
+  }, 'rowCount', 'isHorizontal'),
 
   /**
     @private
