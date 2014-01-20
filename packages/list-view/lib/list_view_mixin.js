@@ -609,14 +609,14 @@ Ember.ListViewMixin = Ember.Mixin.create({
       rowCount = get(this, 'rowCount');
       calculatedStartingIndex = floor(scrollOffset / columnWidth) * rowCount;
       largestStartingIndex = max(contentLength - 1, 0);
-      return min(calculatedStartingIndex, largestStartingIndex);
+      return max(0, min(calculatedStartingIndex, largestStartingIndex));
     } else {
       // vertical list
       rowHeight = get(this, 'rowHeight');
       columnCount = get(this, 'columnCount');
       calculatedStartingIndex = floor(scrollOffset / rowHeight) * columnCount;
       largestStartingIndex = max(contentLength - 1, 0);
-      return min(calculatedStartingIndex, largestStartingIndex);
+      return max(0, min(calculatedStartingIndex, largestStartingIndex));
     }
   },
 
