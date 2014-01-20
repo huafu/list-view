@@ -1,4 +1,4 @@
-// Last commit: 0a49ece (2014-01-20 09:21:04 +0700)
+// Last commit: 702f79b (2014-01-20 11:39:06 +0700)
 
 
 (function() {
@@ -857,14 +857,14 @@ Ember.ListViewMixin = Ember.Mixin.create({
       rowCount = get(this, 'rowCount');
       calculatedStartingIndex = floor(scrollOffset / columnWidth) * rowCount;
       largestStartingIndex = max(contentLength - 1, 0);
-      return min(calculatedStartingIndex, largestStartingIndex);
+      return max(0, min(calculatedStartingIndex, largestStartingIndex));
     } else {
       // vertical list
       rowHeight = get(this, 'rowHeight');
       columnCount = get(this, 'columnCount');
       calculatedStartingIndex = floor(scrollOffset / rowHeight) * columnCount;
       largestStartingIndex = max(contentLength - 1, 0);
-      return min(calculatedStartingIndex, largestStartingIndex);
+      return max(0, min(calculatedStartingIndex, largestStartingIndex));
     }
   },
 
