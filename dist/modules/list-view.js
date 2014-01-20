@@ -336,6 +336,7 @@ Ember.ListViewMixin = Ember.Mixin.create({
   itemViewClass: Ember.ListItemView,
   emptyViewClass: Ember.View,
   classNames: ['ember-list-view'],
+  classNameBindings: ['isHorizontal:horizontal:vertical'],
   attributeBindings: ['style'],
   domManager: domManager,
   scrollOffset: 0,
