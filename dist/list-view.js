@@ -1,4 +1,4 @@
-// Last commit: f789811 (2014-01-19 01:24:33 -0500)
+// Last commit: 03e12b1 (2014-01-19 16:44:10 -0500)
 
 
 (function() {
@@ -695,7 +695,7 @@ Ember.ListViewMixin = Ember.Mixin.create({
 
     largestStartingIndex = max(contentLength - 1, 0);
 
-    return min(calculatedStartingIndex, largestStartingIndex);
+    return max(0, min(calculatedStartingIndex, largestStartingIndex));
   },
 
   /**
@@ -1167,7 +1167,7 @@ function synthesizeClick(e) {
   var point = e.changedTouches[0],
     target = point.target,
     ev;
-  if (target && fieldRegex.test(target.tagName)) {
+  if (target) {
     ev = document.createEvent('MouseEvents');
     ev.initMouseEvent('click', true, true, e.view, 1, point.screenX, point.screenY, point.clientX, point.clientY, e.ctrlKey, e.altKey, e.shiftKey, e.metaKey, 0, null);
     return target.dispatchEvent(ev);
