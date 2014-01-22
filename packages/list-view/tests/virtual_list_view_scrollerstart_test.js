@@ -168,6 +168,45 @@ test("doesn't fire scrollerstart event when view did not actually scroll vertica
   Ember.$(document).off("scrollerstart");
 });
 
+/** find a way to fake the touch mode so that this test can be run 
+test("fire a click event when no vertical scroll has been done", function() {
+  var click = 0;
+  view = Ember.VirtualListView.create({
+    itemViewClass: Ember.ListItemView.extend({
+      template: Ember.Handlebars.compile('{{name}}'),
+      click: function() {
+        click++;
+      }
+    }),
+    content: helper.generateContent(4),
+    height: 150,
+    rowHeight: 50
+  });
+
+  appendView();
+
+  var childElement = view.$('.ember-list-item-view')[0];
+
+  Ember.run(function(){
+    nextTopPosition = 0;
+    fireEvent('start', childElement);
+    fireEvent('move', childElement);
+    fireEvent('end', childElement);
+  });
+
+  equal(click, 1, "click should fire if view did not scroll");
+
+  Ember.run(function(){
+    fireEvent('start', childElement);
+    nextTopPosition = nextTopPosition + 1;
+    fireEvent('move', childElement);
+    fireEvent('end', childElement);
+  });
+
+  equal(click, 1, "click should not fire if view scrolled");
+});
+*/
+
 test("When pulling below zero, still fire a scrollerstart event", function() {
   expect(1);
   view = Ember.VirtualListView.create({
