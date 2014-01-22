@@ -444,7 +444,7 @@ Ember.ListViewMixin = Ember.Mixin.create({
 
     largestStartingIndex = max(contentLength - 1, 0);
 
-    return min(calculatedStartingIndex, largestStartingIndex);
+    return max(0, min(calculatedStartingIndex, largestStartingIndex));
   },
 
   /**
