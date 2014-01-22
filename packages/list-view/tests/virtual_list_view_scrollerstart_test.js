@@ -35,7 +35,7 @@ function fireEvent(type, target) {
     } : {
       start: 'mousedown',
       move: 'mousemove',
-      end: 'mouseend'
+      end: 'mouseup'
     },
     e = document.createEvent('Event');
   if (hasTouch) {
