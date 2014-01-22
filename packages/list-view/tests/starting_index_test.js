@@ -31,6 +31,21 @@ test("base case", function(){
   equal(view._startingIndex(), 0);
 });
 
+test("scroll but beyond 0 (bouncing)", function(){
+  var height = 500, rowHeight = 50, width = 100, elementWidth = 50;
+
+  view = Ember.ListView.create({
+    height: height,
+    rowHeight: rowHeight,
+    content: helper.generateContent(5),
+    width: width,
+    elementWidth: elementWidth,
+    scrollTop: -100
+  });
+
+  equal(view._startingIndex(), 0);
+});
+
 test("scroll but within content length", function(){
   var height = 500, rowHeight = 50, width = 100, elementWidth = 50;
 
